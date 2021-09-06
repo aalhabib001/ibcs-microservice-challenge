@@ -1,0 +1,28 @@
+
+---
+server:
+  port: 8005
+  error:
+#    include-binding-errors: always
+    include-message: always
+
+spring:
+  application:
+    name: employee-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+---
+
+---
+
+#Database Credentials
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/employee-service}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:12211221}
+
+---
+

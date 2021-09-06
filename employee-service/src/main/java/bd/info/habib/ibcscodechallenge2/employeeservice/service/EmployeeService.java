@@ -25,25 +25,25 @@ import java.util.Optional;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    public ResponseEntity<BasicApiResponse<List<EmployeeResponse>>> getEmployeeList() {
-        List<EmployeeModel> employeeModels = employeeRepository.findAll();
-
-        List<EmployeeResponse> employeeResponses = new ArrayList<>();
-        for (EmployeeModel employeeModel : employeeModels) {
-            EmployeeResponse employeeResponse = new EmployeeResponse(employeeModel.getId(), employeeModel.getCode(),
-                    employeeModel.getName(), employeeModel.getDateOfBirth(), employeeModel.getGender(),
-                    employeeModel.getMobile(), employeeModel.getDepartmentModel().getName());
-
-            employeeResponses.add(employeeResponse);
-        }
-
-        if (employeeModels.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Employee Found");
-        } else {
-            return new ResponseEntity<>(new BasicApiResponse<>(200, "Employees Found", employeeResponses),
-                    HttpStatus.OK);
-        }
-    }
+//    public ResponseEntity<BasicApiResponse<List<EmployeeResponse>>> getEmployeeList() {
+//        List<EmployeeModel> employeeModels = employeeRepository.findAll();
+//
+//        List<EmployeeResponse> employeeResponses = new ArrayList<>();
+//        for (EmployeeModel employeeModel : employeeModels) {
+//            EmployeeResponse employeeResponse = new EmployeeResponse(employeeModel.getId(), employeeModel.getCode(),
+//                    employeeModel.getName(), employeeModel.getDateOfBirth(), employeeModel.getGender(),
+//                    employeeModel.getMobile(), employeeModel.getDepartmentModel().getName());
+//
+//            employeeResponses.add(employeeResponse);
+//        }
+//
+//        if (employeeModels.isEmpty()) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Employee Found");
+//        } else {
+//            return new ResponseEntity<>(new BasicApiResponse<>(200, "Employees Found", employeeResponses),
+//                    HttpStatus.OK);
+//        }
+//    }
 
     //Create a new employee
     public ResponseEntity<ApiMessageResponse> addEmployee(EmployeeRequest employeeRequest) {

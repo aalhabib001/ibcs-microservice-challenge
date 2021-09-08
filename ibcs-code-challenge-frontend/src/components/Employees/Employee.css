@@ -1,0 +1,10 @@
+
+.table-margin {
+    margin: 3rem;
+}
+
+@media (max-width: 600px) {
+    .table-margin {
+        margin: 0;
+    }
+}

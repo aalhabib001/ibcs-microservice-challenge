@@ -80,17 +80,20 @@ public class EmployeeService {
 
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(employeeId);
         if (employeeModelOptional.isPresent()) { //null checking
+            System.out.println(employeeRequest.toString());
             EmployeeModel employeeModel = employeeModelOptional.get();
 
             DepartmentResponse departmentResponse =
                     feignDepartment.getDepartmentById(employeeRequest.getDepartmentId()).getData();
 
-            employeeModel.setCode(employeeRequest.getCode());
+//            employeeModel.setCode(employeeRequest.getCode());
             employeeModel.setName(employeeRequest.getName());
             employeeModel.setDateOfBirth(employeeRequest.getDateOfBirth());
             employeeModel.setMobile(employeeRequest.getMobile());
             employeeModel.setGender(employeeRequest.getGender());
             employeeModel.setDepartmentId(departmentResponse.getId());
+
+            employeeRepository.save(employeeModel);
 
             return new ResponseEntity<>(new ApiMessageResponse(200, "Employee Edit Successful"), HttpStatus.OK);
 

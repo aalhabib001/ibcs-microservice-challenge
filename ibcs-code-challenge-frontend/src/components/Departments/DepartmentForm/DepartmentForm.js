@@ -24,12 +24,13 @@ const DepartmentForm = (props) => {
         deptData.name = event.target.dept.value
         deptData.active = event.target.active.checked
 
-        if (isNew) {
+        if (isNew === 'true') {
             console.log(deptData);
 
             await axios({
                 method: 'post',
-                url: 'http://localhost:8006/departments',
+                // url: 'http://localhost:8006/departments',
+                url: 'http://localhost:8000/api/department-service/departments',
                 headers: {'Content-Type': 'application/json'},
                 data: deptData
             })
@@ -48,7 +49,8 @@ const DepartmentForm = (props) => {
 
             axios({
                 method: 'put',
-                url: 'http://localhost:8006/departments/' + parseInt(id),
+                // url: 'http://localhost:8006/departments/' + parseInt(id),
+                url: 'http://localhost:8000/api/department-service/departments/' + parseInt(id),
                 headers: {'Content-Type': 'application/json'},
                 data: deptData
             })
@@ -66,6 +68,7 @@ const DepartmentForm = (props) => {
                 })
         }
     }
+
     return (
         <div>
             <Modal show={show} onHide={handleClose} centered>

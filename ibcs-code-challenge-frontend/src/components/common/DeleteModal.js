@@ -9,12 +9,33 @@ const DeleteModal = (props) => {
 
 
     const handleDelete = async () => {
-        if (isEmployee) {
-
-        } else {
+        console.log(isEmployee)
+        if (isEmployee === 'true') {
+            console.log(1)
             await axios({
                 method: 'delete',
-                url: 'http://localhost:8006/departments/' + parseInt(id),
+                // url: 'http://localhost:8005/employees/' + parseInt(id),
+                url: 'http://localhost:8000/api/employee-service/employees/' + parseInt(id),
+                headers: {'Content-Type': 'application/json'}
+            })
+                .then(res => {
+                    console.log(res)
+                    console.log(value)
+                    setValue(value + 1)
+                    openSnackbar(res.data.message)
+                    handleClose()
+                })
+                .catch(error => {
+                    console.log(error)
+                    let errorData = error.response.data;
+                    openSnackbar(errorData.message)
+                })
+        } else {
+            console.log(2)
+            await axios({
+                method: 'delete',
+                // url: 'http://localhost:8006/departments/' + parseInt(id),
+                url: 'http://localhost:8000/api/department-service/departments/' + parseInt(id),
                 headers: {'Content-Type': 'application/json'}
             })
                 .then(res => {

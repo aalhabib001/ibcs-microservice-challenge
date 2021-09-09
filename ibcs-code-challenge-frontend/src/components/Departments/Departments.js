@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Container, Table} from "react-bootstrap";
 import DeptTableRow from "./DeptTableRow/DeptTableRow";
 import {departmentFakeData} from "./DepartmentFakeData";
@@ -6,6 +6,7 @@ import './Department.css'
 import DepartmentForm from "./DepartmentForm/DepartmentForm";
 import axios from "axios";
 import {useSnackbar} from 'react-simple-snackbar'
+import {DeptContext} from "../../App";
 
 const Departments = () => {
 
@@ -14,7 +15,7 @@ const Departments = () => {
     const handleShow = () => setShow(true);
     const [openSnackbar] = useSnackbar()
 
-    const [departments, setDepartments] = useState([]);
+    const [departments, setDepartments] = useContext(DeptContext);
     const [value, setValue] = useState(1);
 
     useEffect(() => {
@@ -23,7 +24,8 @@ const Departments = () => {
 
         axios({
             method: 'get',
-            url: 'http://localhost:8006/departments',
+            // url: 'http://localhost:8006/departments',
+            url: 'http://localhost:8000/api/department-service/departments',
             headers: {'Content-Type': 'application/json'}
         })
             .then(res => {

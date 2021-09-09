@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Container, Table} from "react-bootstrap";
 import {employeeFakeData} from "./EmployeeFakeData";
 import EmpTableRow from "./EmpTableRow/EmpTableRow";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import {useSnackbar} from 'react-simple-snackbar'
+import axios from "axios";
 
 const Employees = () => {
 
@@ -11,14 +12,44 @@ const Employees = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => {
-        openSnackbar('This is the content of the Snackbar.')
         setShow(true)
     };
+
+    const [employees, setEmployees] = useState([]);
+    const [value, setValue] = useState(1);
+
+    useEffect(() => {
+
+        openSnackbar("Data Loading from Internet")
+
+        axios({
+            method: 'get',
+            // url: 'http://localhost:8005/employees/',
+            url: 'http://localhost:8000/api/employee-service/employees',
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(res => {
+                console.log(res.data)
+                setEmployees(res.data.data)
+
+                openSnackbar("Data Loaded from Internet")
+
+            })
+            .catch(error => {
+                let errorData = error.response.data;
+                console.log(errorData)
+
+                openSnackbar(errorData.message)
+            })
+
+    }, [value])
+
 
 
     return (
         <Container>
-            <EmployeeForm show={show} handleClose={handleClose} isNew="true" key="0" data={{}}/>
+            <EmployeeForm show={show} handleClose={handleClose} isNew="true" key="0" data={{}}
+                          value={value} setValue={setValue}/>
             <div className="d-flex justify-content-between mt-5 mx-5">
                 <h3>Employee List</h3>
                 <Button onClick={handleShow} className="btn btn-primary">Add Employee</Button>
@@ -39,8 +70,8 @@ const Employees = () => {
                     {/*</thead>*/}
                     <tbody>
                     {
-                        employeeFakeData.map(employeeData => <EmpTableRow key={employeeData.id}
-                                                                          tableData={employeeData}/>)
+                        employees.map(employeeData => <EmpTableRow key={employeeData.id} tableData={employeeData}
+                                                                   value={value} setValue={setValue}/>)
                     }
                     </tbody>
                 </Table>

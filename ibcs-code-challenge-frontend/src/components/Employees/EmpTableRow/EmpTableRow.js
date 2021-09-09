@@ -4,7 +4,8 @@ import DeleteModal from "../../common/DeleteModal";
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
 
 const EmpTableRow = (props) => {
-    const {code, name, dob, gender, phone, dept} = props.tableData;
+    let {code, name, dateOfBirth, gender, mobile, departmentName, id} = props.tableData;
+    const {value, setValue} = props;
 
     const [show1, setShow1] = useState(false);
 
@@ -13,18 +14,21 @@ const EmpTableRow = (props) => {
     const [show2, setShow2] = useState(false);
 
     const handleClose2 = () => setShow2(false);
-    const handleShow2 = () => setShow2(true);
+    const handleShow2 = () => setShow2(true)
+
+    // props.tableData.dateOfBirth = props.tableData.dateOfBirth.replaceAll("/", "-")
 
     return (
         <>
-            <EmployeeForm show={show1} handleClose={handleClose1} isNew="false" key={code} data={props.tableData}/>
+            <EmployeeForm show={show1} handleClose={handleClose1} isNew="false" value={value}
+                          setValue={setValue} key={code} data={props.tableData}/>
             <tr>
                 <td>{code}</td>
                 <td>{name}</td>
-                <td>{dob}</td>
-                <td>{phone}</td>
+                <td>{dateOfBirth}</td>
+                <td>{mobile}</td>
                 <td>{gender}</td>
-                <td>{dept}</td>
+                <td>{departmentName}</td>
                 <td>
                     <div className="d-flex justify-content-around">
                         <div>
@@ -37,7 +41,7 @@ const EmpTableRow = (props) => {
                 </td>
             </tr>
 
-            <DeleteModal show={show2} handleClose={handleClose2}/>
+            <DeleteModal show={show2} id={id} isEmployee="true" value={value} setValue={setValue} handleClose={handleClose2}/>
         </>
     );
 };

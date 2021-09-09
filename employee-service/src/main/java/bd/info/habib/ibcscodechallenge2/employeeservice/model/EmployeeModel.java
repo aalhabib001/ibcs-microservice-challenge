@@ -32,7 +32,7 @@ public class EmployeeModel {
     @Column(name = "NAME", nullable = false, length = 35)
     private String name;
 
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "DATE_OF_BIRTH")
     private LocalDate dateOfBirth;
 

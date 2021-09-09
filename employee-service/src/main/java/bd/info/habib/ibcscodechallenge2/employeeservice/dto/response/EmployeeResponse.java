@@ -20,7 +20,7 @@ public class EmployeeResponse {
 
     private String name;
 
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
     private Gender gender;

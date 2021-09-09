@@ -5,6 +5,16 @@ spring:
     name: cloud-gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
       discovery:
         locator:
           lowerCaseServiceId: true
@@ -18,7 +28,6 @@ spring:
               args:
                 regexp: "'/api/' + serviceId.toLowerCase() + '/(?<remaining>.*)'"
                 replacement: "'/${remaining}'"
-
 eureka:
   client:
     register-with-eureka: true

@@ -4,6 +4,7 @@ import bd.info.habib.ibcscodechallenge2.departmentservice.dto.request.Department
 import bd.info.habib.ibcscodechallenge2.departmentservice.dto.response.ApiMessageResponse;
 import bd.info.habib.ibcscodechallenge2.departmentservice.dto.response.BasicApiResponse;
 import bd.info.habib.ibcscodechallenge2.departmentservice.dto.response.DepartmentResponse;
+import bd.info.habib.ibcscodechallenge2.departmentservice.model.DepartmentModel;
 import bd.info.habib.ibcscodechallenge2.departmentservice.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/departments")
@@ -22,6 +24,11 @@ public class DepartmentController {
     @GetMapping
     public ResponseEntity<BasicApiResponse<List<DepartmentResponse>>> getDepartments() {
         return departmentService.getDepartments();
+    }
+
+    @GetMapping("/byIds")
+    public ResponseEntity<List<DepartmentModel>> getDepartmentsById(@RequestParam List<Long> ids){
+        return departmentService.getDepartmentsById(ids);
     }
 
     //Create a new Department

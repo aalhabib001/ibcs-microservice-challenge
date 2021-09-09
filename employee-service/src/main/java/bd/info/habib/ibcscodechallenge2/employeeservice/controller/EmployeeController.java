@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,10 +17,10 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-//    @GetMapping
-//    private ResponseEntity<BasicApiResponse<List<EmployeeResponse>>> getEmployeeList(){
-//        return employeeService.getEmployeeList();
-//    }
+    @GetMapping
+    private ResponseEntity<BasicApiResponse<List<EmployeeResponse>>> getEmployeeList(){
+        return employeeService.getEmployeeList();
+    }
 
     //Create a new employee
     @PostMapping

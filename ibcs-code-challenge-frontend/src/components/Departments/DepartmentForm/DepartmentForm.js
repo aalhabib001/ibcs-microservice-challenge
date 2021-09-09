@@ -1,25 +1,70 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
+import axios from "axios";
+import {useSnackbar} from 'react-simple-snackbar'
 
 const DepartmentForm = (props) => {
 
-    let {show, handleClose, name, isActive, isNew, id} = props;
+    let {show, handleClose, name, isActive, isNew, id, value, setValue} = props;
+    const [openSnackbar] = useSnackbar()
 
     const handleOnBlur = (event) => {
         console.log(event.target.checked)
     }
 
-    const handleSubmit = (event) => {
-        if(isNew){
-            console.log(event.target.deptName.value)
-            console.log(event.target.isActive.checked)
-        }
-        else {
-            console.log(id)
-            console.log(event.target.deptName.value)
-            console.log(event.target.isActive.checked)
-        }
+    const [deptData, setDeptData] = useState({
+        name: null,
+        active: null
+    })
+
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
+
+        deptData.name = event.target.dept.value
+        deptData.active = event.target.active.checked
+
+        if (isNew) {
+            console.log(deptData);
+
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8006/departments',
+                headers: {'Content-Type': 'application/json'},
+                data: deptData
+            })
+                .then(res => {
+                    setValue(value + 1)
+                    openSnackbar(res.data.message)
+                    handleClose()
+                })
+                .catch(error => {
+                    let errorData = error.response.data;
+                    openSnackbar(errorData.message)
+                })
+        } else {
+            console.log(deptData);
+            console.log(id)
+
+            axios({
+                method: 'put',
+                url: 'http://localhost:8006/departments/' + parseInt(id),
+                headers: {'Content-Type': 'application/json'},
+                data: deptData
+            })
+                .then(res => {
+                    console.log(res)
+                    console.log(value)
+                    setValue(value + 1)
+                    openSnackbar(res.data.message)
+                    handleClose()
+                })
+                .catch(error => {
+                    console.log(error)
+                    let errorData = error.response.data;
+                    openSnackbar(errorData.message)
+                })
+        }
     }
     return (
         <div>
@@ -33,11 +78,11 @@ const DepartmentForm = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3" controlId="deptName">
+                        <Form.Group className="mb-3" controlId="dept">
                             <Form.Label>Department Name</Form.Label>
                             <Form.Control defaultValue={name} type="text" placeholder="Dept Name"/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="isActive">
+                        <Form.Group className="mb-3" controlId="active">
                             <Form.Check onBlur={handleOnBlur} defaultChecked={isActive} type="checkbox" label="Active"/>
                         </Form.Group>
                         <Button variant="primary" type="submit">

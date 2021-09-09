@@ -6,6 +6,7 @@ import DepartmentForm from "../DepartmentForm/DepartmentForm";
 
 const DeptTableRow = (props) => {
     const {id, name, active} = props.tableData;
+    const {value, setValue} = props;
 
     const [show1, setShow1] = useState(false);
 
@@ -19,7 +20,7 @@ const DeptTableRow = (props) => {
 
     return (
         <>
-            <DepartmentForm show={show1} handleClose={handleClose1}
+            <DepartmentForm show={show1} handleClose={handleClose1} value={value} setValue={setValue}
                             name={name} isActive={active} key={id} isNew={false} id={id}/>
             <tr>
                 <td>{id}</td>
@@ -45,7 +46,8 @@ const DeptTableRow = (props) => {
                 </td>
             </tr>
 
-            <DeleteModal show={show2} handleClose={handleClose2}/>
+            <DeleteModal show={show2} handleClose={handleClose2} isEmployee="false"
+                         id={id} value={value} setValue={setValue}/>
         </>
 
     );

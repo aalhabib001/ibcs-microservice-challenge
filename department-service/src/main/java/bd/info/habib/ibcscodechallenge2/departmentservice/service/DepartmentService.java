@@ -7,6 +7,7 @@ import bd.info.habib.ibcscodechallenge2.departmentservice.dto.response.Departmen
 import bd.info.habib.ibcscodechallenge2.departmentservice.model.DepartmentModel;
 import bd.info.habib.ibcscodechallenge2.departmentservice.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,18 @@ public class DepartmentService {
         else {
             //If No department found
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Department found with ID: " + departmentId);
+        }
+    }
+
+    public ResponseEntity<List<DepartmentModel>> getDepartmentsById(List<Long> ids) {
+        List<DepartmentModel> departmentModels =
+                departmentRepository.findAllByIdIn(ids, Sort.by(Sort.Direction.ASC,"id"));
+
+        if(departmentModels.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Department found with those ids");
+        }
+        else {
+            return new ResponseEntity<>(departmentModels, HttpStatus.OK);
         }
     }
 }

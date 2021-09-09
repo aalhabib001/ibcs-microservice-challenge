@@ -26,7 +26,7 @@ const Employees = () => {
 
             <div className="d-flex justify-content-center table-margin">
                 <Table striped bordered hover>
-                    <thead>
+                    {/*<thead>*/}
                     <tr>
                         <th>Code</th>
                         <th>Name</th>
@@ -36,7 +36,7 @@ const Employees = () => {
                         <th>Dept Name</th>
                         <th>Action</th>
                     </tr>
-                    </thead>
+                    {/*</thead>*/}
                     <tbody>
                     {
                         employeeFakeData.map(employeeData => <EmpTableRow key={employeeData.id}

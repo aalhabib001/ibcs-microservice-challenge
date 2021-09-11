@@ -27,9 +27,14 @@ function App() {
 
             })
             .catch(error => {
-                let errorData = error.response.data;
+                let errorData;
+                if(error.response){
+                    errorData = error.response.data.message;
+                }
+                else {
+                    errorData = error.message
+                }
                 console.log(errorData)
-
             })
 
     }, [])

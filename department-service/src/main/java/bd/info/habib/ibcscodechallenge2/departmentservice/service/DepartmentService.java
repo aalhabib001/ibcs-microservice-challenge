@@ -25,7 +25,7 @@ public class DepartmentService {
     //Getting all the list of departments
     public ResponseEntity<BasicApiResponse<List<DepartmentResponse>>> getDepartments() {
         //Getting All The list of departments
-        List<DepartmentModel> departmentModels = departmentRepository.findAll();
+        List<DepartmentModel> departmentModels = departmentRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 
         List<DepartmentResponse> departmentResponses = new ArrayList<>();
         //Converting Department model to department response for sending in frontend

@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Container, Table} from "react-bootstrap";
 import DeptTableRow from "./DeptTableRow/DeptTableRow";
-import {departmentFakeData} from "./DepartmentFakeData";
 import './Department.css'
 import DepartmentForm from "./DepartmentForm/DepartmentForm";
 import axios from "axios";
@@ -36,10 +35,14 @@ const Departments = () => {
 
             })
             .catch(error => {
-                let errorData = error.response.data;
+                let errorData;
+                if (error.response) {
+                    errorData = error.response.data.message;
+                } else {
+                    errorData = error.message
+                }
                 console.log(errorData)
-
-                openSnackbar(errorData.message)
+                openSnackbar(errorData)
             })
 
     }, [value])

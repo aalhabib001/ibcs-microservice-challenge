@@ -12,11 +12,10 @@ const DepartmentForm = (props) => {
         console.log(event.target.checked)
     }
 
-    const [deptData, setDeptData] = useState({
+    const [deptData] = useState({
         name: null,
         active: null
     })
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -83,7 +82,7 @@ const DepartmentForm = (props) => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="dept">
                             <Form.Label>Department Name</Form.Label>
-                            <Form.Control defaultValue={name} type="text" placeholder="Dept Name"/>
+                            <Form.Control defaultValue={name} type="text" placeholder="Dept Name" required/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="active">
                             <Form.Check onBlur={handleOnBlur} defaultChecked={isActive} type="checkbox" label="Active"/>

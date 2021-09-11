@@ -27,7 +27,7 @@ public class EmployeeService {
 
     public ResponseEntity<BasicApiResponse<List<EmployeeResponse>>> getEmployeeList() {
         List<EmployeeModel> employeeModels =
-                employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "departmentId"));
+                employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "code"));
 
         List<Long> deptIds = new ArrayList<>();
         for (EmployeeModel employeeModel : employeeModels) {

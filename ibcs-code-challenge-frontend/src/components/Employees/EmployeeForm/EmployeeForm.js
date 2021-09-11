@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
-import {departmentFakeData} from "../../Departments/DepartmentFakeData";
 import axios from "axios";
 import {useSnackbar} from 'react-simple-snackbar'
 import {DeptContext} from "../../../App";
@@ -10,10 +9,10 @@ const EmployeeForm = (props) => {
     let {name, mobile, code, gender, dateOfBirth, departmentName, id} = props.data;
 
     const [openSnackbar] = useSnackbar()
-    const [departments, setDepartments] = useContext(DeptContext);
+    const [departments] = useContext(DeptContext);
 
 
-    const [employeeData, setEmployeeData] = useState({
+    const [employeeData] = useState({
         code: null,
         name: null,
         dateOfBirth: null,
@@ -21,6 +20,7 @@ const EmployeeForm = (props) => {
         mobile: null,
         departmentId: null
     });
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -84,7 +84,7 @@ const EmployeeForm = (props) => {
 
     let deptId;
     for (let i = 0; i < departments.length; i++) {
-        if(departments[i].name === departmentName){
+        if (departments[i].name === departmentName) {
             deptId = departments[i].id;
             break;
         }
@@ -107,19 +107,19 @@ const EmployeeForm = (props) => {
                             (isNew === 'true') ?
                                 <Form.Group className="mb-3" controlId="code">
                                     <Form.Label>Code</Form.Label>
-                                    <Form.Control defaultValue={code} type="number" placeholder="Code"/>
+                                    <Form.Control defaultValue={code} type="number" placeholder="Code" maxlength="4" size="4" required/>
                                 </Form.Group> :
                                 <></>
                         }
 
                         <Form.Group className="mb-3" controlId="name">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control defaultValue={name} type="text" placeholder="Name"/>
+                            <Form.Control defaultValue={name} type="text" placeholder="Name"required/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="dateOfBirth">
                             <Form.Label>Date of Birth</Form.Label>
                             <Form.Control defaultValue={dateOfBirth} type="date"
-                                          placeholder="Date of Birth"/>
+                                          placeholder="Date of Birth"required/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="gender">
                             <Form.Label>Gender</Form.Label>
@@ -132,7 +132,7 @@ const EmployeeForm = (props) => {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="mobile">
                             <Form.Label>Mobile No</Form.Label>
-                            <Form.Control defaultValue={mobile} type="text" placeholder="Mobile"/>
+                            <Form.Control defaultValue={mobile} type="text" placeholder="Mobile"required/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="departmentId">
                             <Form.Label>Department</Form.Label>

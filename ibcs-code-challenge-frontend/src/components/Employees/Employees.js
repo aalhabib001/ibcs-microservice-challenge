@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Container, Table} from "react-bootstrap";
-import {employeeFakeData} from "./EmployeeFakeData";
 import EmpTableRow from "./EmpTableRow/EmpTableRow";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import {useSnackbar} from 'react-simple-snackbar'
@@ -36,14 +35,17 @@ const Employees = () => {
 
             })
             .catch(error => {
-                let errorData = error.response.data;
+                let errorData;
+                if (error.response) {
+                    errorData = error.response.data.message;
+                } else {
+                    errorData = error.message
+                }
                 console.log(errorData)
-
-                openSnackbar(errorData.message)
+                openSnackbar(errorData)
             })
 
     }, [value])
-
 
 
     return (
@@ -57,7 +59,7 @@ const Employees = () => {
 
             <div className="d-flex justify-content-center table-margin">
                 <Table striped bordered hover>
-                    {/*<thead>*/}
+                    <thead>
                     <tr>
                         <th>Code</th>
                         <th>Name</th>
@@ -67,7 +69,7 @@ const Employees = () => {
                         <th>Dept Name</th>
                         <th>Action</th>
                     </tr>
-                    {/*</thead>*/}
+                    </thead>
                     <tbody>
                     {
                         employees.map(employeeData => <EmpTableRow key={employeeData.id} tableData={employeeData}

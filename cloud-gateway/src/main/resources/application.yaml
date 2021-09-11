@@ -5,29 +5,30 @@ spring:
     name: cloud-gateway
   cloud:
     gateway:
+      routes:
+        - id: employee-service
+          uri: lb://EMPLOYEE-SERVICE
+          predicates:
+            - Path=/api/employee-service/**
+          filters:
+            - RewritePath=/api/employee-service/(?<segment>.*), /$\{segment}
+        - id: department-service
+          uri: lb://DEPARTMENT-SERVICE
+          predicates:
+            - Path=/api/department-service/**
+          filters:
+            - RewritePath=/api/department-service/(?<segment>.*), /$\{segment}
       globalcors:
         cors-configurations:
           '[/**]':
             allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods:
-            - GET
-            - POST
-            - PUT
-            - DELETE
-      discovery:
-        locator:
-          lowerCaseServiceId: true
-          enabled: true
-          predicates:
-            - name: Path
-              args:
-                pattern: "'/api/'+serviceId.toLowerCase()+'/**'"
-          filters:
-            - name: RewritePath
-              args:
-                regexp: "'/api/' + serviceId.toLowerCase() + '/(?<remaining>.*)'"
-                replacement: "'/${remaining}'"
+              - GET
+              - POST
+              - PUT
+              - DELETE
+
 eureka:
   client:
     register-with-eureka: true

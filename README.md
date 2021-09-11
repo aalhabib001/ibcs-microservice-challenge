@@ -7,6 +7,7 @@
 - CRUD Operations for Employee and Departments
 - Separate Services for Employee and Department
 - Frontend done in reactjs
+- Service to Service communication using Feign Client
 
 **Technology Used-Backend:**
 - Java
@@ -16,6 +17,7 @@
 - Swagger API Documentation
 - Spring Cloud Gateway
 - Eureka Service Registry
+- Open Feign
 
 **Technology Used-Frontend:**
 - Javascript
@@ -31,3 +33,7 @@ Backend:
 1. Setup PostgreSQL Database
 2. Change Database Connection Information at application.yaml
 3. Give Command`mvn spring-boot:run`
+
+Frontend:
+1. Give Command `npm install`
+2. Give Command `npm start`
